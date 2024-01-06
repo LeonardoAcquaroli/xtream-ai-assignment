@@ -2,12 +2,19 @@ import streamlit as st
 import pandas as pd
 import statsmodels.api as sm
 from sklearn.impute import  SimpleImputer
+import requests
+from io import BytesIO
 
+@st.cache_resource(show_spinner=False)
+def load_model_from_pickle(model_pickle_url):
+    # Send a GET request to GitHub
+    file_like_object = BytesIO(requests.get(model_pickle_url).content)
 
-# Load the logistic regression model
-logreg = sm.load(r"C:\Users\leoac\OneDrive\Work\Applications\xTream\xtream-ai-assignment\logreg_fit.pickle")
+    # Load the logistic regression model
+    model = sm.load(file_like_object)
+    return model
 
-# Dat preparation
+# Data preparation
 def process_data(data):
 
     # Check for correct column names
@@ -89,7 +96,6 @@ def process_data(data):
 
     return processed_data
 
-
 # Function to make predictions
 def make_predictions(model, exog_data, enrollee_ids):
     enrollee_ids = enrollee_ids.astype('str')
@@ -105,15 +111,20 @@ def main():
     st.header("Model Explanation")
     st.write("The model used to perform the predictions is a Logistic regression trained on the actual company data.") 
     st.write("The variables weights are represented below.") 
-    st.image(r"C:\Users\leoac\OneDrive\Work\Applications\xTream\xtream-ai-assignment\weights_plot.png")
+    st.image("https://github.com/LeonardoAcquaroli/xtream-ai-assignment/blob/main/assignment-LeonardoAcquaroli/weights_plot.png?raw=true")
 
     # Upload CSV file
     st.header("Upload CSV File")
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
     if uploaded_file is not None:
+        position = uploaded_file.tell() # current position of the file pointer
         # Load data
         churn = pd.read_csv(uploaded_file)
+        if ';' in churn.columns[0]: # robust to ';' separator
+            # Reset the file pointer to the original position
+            uploaded_file.seek(position)
+            churn = pd.read_csv(uploaded_file, sep=';')
 
         # Data preparation
         processed_data = process_data(churn)
@@ -121,6 +132,7 @@ def main():
         X_with_intercept = sm.add_constant(X)
 
         # Make predictions
+        logreg = load_model_from_pickle(model_pickle_url = "https://github.com/LeonardoAcquaroli/xtream-ai-assignment/raw/main/assignment-LeonardoAcquaroli/logreg_fit.pickle")
         predictions = make_predictions(model=logreg, exog_data=X_with_intercept, enrollee_ids=processed_data['enrollee_id'])
 
         # Display predictions
