@@ -113,9 +113,8 @@ def main():
                 The model used to perform the predictions is a Logistic regression trained on the actual company data.
                 
                 The variables weights are represented below.
-                Each prediction is made by multiplying the weights and the variables values and then passing the result into a logistic function:
+                Each prediction is made by multiplying the weights and the variables values and then passing the result into a Logistic function.
                 ''')
-    st.write(r'''$$\[ f(x) = \frac{1}{1 + e^{-x}} \]$$''')
     st.image("https://github.com/LeonardoAcquaroli/xtream-ai-assignment/blob/main/assignment-LeonardoAcquaroli/weights_plot.png?raw=true")
 
     # Upload CSV file
