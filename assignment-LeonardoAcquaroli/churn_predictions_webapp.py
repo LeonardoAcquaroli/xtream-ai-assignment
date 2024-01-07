@@ -115,7 +115,7 @@ def main():
                 The variables weights are represented below.
                 Each prediction is made by multiplying the weights and the variables values and then passing the result into a logistic function:
                 ''')
-    st.latex(r'\[ f(x) = \frac{1}{1 + e^{-x}} \]')
+    st.latex(r'''\[ f(x) = \frac{1}{1 + e^{-x}} \]''')
     st.image("https://github.com/LeonardoAcquaroli/xtream-ai-assignment/blob/main/assignment-LeonardoAcquaroli/weights_plot.png?raw=true")
 
     # Upload CSV file
