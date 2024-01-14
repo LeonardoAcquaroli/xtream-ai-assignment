@@ -203,6 +203,6 @@ Let's get cracking! 🍐💼🔍
 ---
 
 ## How to run
-Take a look at the [jupyter notebook](https://github.com/LeonardoAcquaroli/xtream-ai-assignment/blob/main/assignment-LeonardoAcquaroli/churn.ipynb) to learn about the data processing and the model selection.
+Follow the steps in the [jupyter notebook](https://github.com/LeonardoAcquaroli/xtream-ai-assignment/blob/main/assignment-LeonardoAcquaroli/churn.ipynb) to learn about the data processing and the model selection.
 
-Get the [deployed web app](https://xtream-ai-assignment-churn.streamlit.app/) to get the predictions.
+Visit the [deployed web app](https://xtream-ai-assignment-churn.streamlit.app/) to get the predictions.
